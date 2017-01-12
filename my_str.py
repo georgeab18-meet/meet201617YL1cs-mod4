@@ -1,5 +1,5 @@
 #FIX THE LINE BELOW
-class xyz : #<-----Replace xyz-make a new class, MyStr, that inherits from str
+class MyStr(str) : #<-----Replace xyz-make a new class, MyStr, that inherits from str
     """
     Build a subclass of str with some new, fun methods.
     """
@@ -49,4 +49,9 @@ class xyz : #<-----Replace xyz-make a new class, MyStr, that inherits from str
         #       do this in as little as 1 line.
         #YOUR CODE BELOW:
         #################
+        String = self.lower()
+        TAKE_OUTc = take_out.lower()
+        use_it = use_this.lower()
+        return str(String).replace(TAKE_OUTc,use_it)
+    
         
