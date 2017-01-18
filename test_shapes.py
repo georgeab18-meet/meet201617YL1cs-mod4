@@ -7,7 +7,7 @@ import time
 #         RECTANGLE           #
 ###############################
 
-my_rect=Rectangle(10,10)
+my_rect=Rectangle(10,10,45)
 print('The area of the rectangle is '+str(my_rect.get_area())+'.')
 
 my_rect.set_length(50)

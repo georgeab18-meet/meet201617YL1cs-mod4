@@ -1,7 +1,8 @@
 import turtle
+import math
 
 class Rectangle :
-    def __init__(self,length,height):
+    def __init__(self,length,height,angle):
         """
         Initialize new rectangle instance.
 
@@ -17,6 +18,11 @@ class Rectangle :
             self.height=height
         else :
             self.height=0
+
+        if angle>=0 :
+            self.angle=angle
+        else :
+            self.angle=0
 
         self.turtle=turtle.clone() #Make a new turtle object just for this instance so that drawings can be cleared.
         turtle.speed(0) #Make turtle move as fast as possible.
@@ -60,9 +66,24 @@ class Rectangle :
         self.turtle.penup()
         self.turtle.goto(0,0)
         self.turtle.pendown()
-        self.turtle.goto(self.length,0)
-        self.turtle.goto(self.length,self.height)
-        self.turtle.goto(0,self.height)
-        self.turtle.goto(0,0)
-        self.turtle.penup()
-        self.has_been_drawn=True
+        if self.angle == 0:
+            self.turtle.goto(self.length,0)
+            self.turtle.goto(self.length,self.height)
+            self.turtle.goto(0,self.height)
+            self.turtle.goto(0,0)
+            self.turtle.penup()
+            self.has_been_drawn=True
+        else:
+            y1 = math.asin(math.radians(90-self.angle))*self.height
+            x1 = math.acos(math.radians(90-self.angle))*self.height
+            y2 = math.asin(math.radians(90-self.angle))*math.sqrt((self.length**2)+(self.height**2))
+            x2 = math.acos(math.radians(90-self.angle))*math.sqrt((self.length**2)+(self.height**2))
+            y3 = math.asin(math.radians(self.angle))*self.length
+            x3 = math.acos(math.radians(self.angle))*self.length
+            self.turtle.goto(x1,y1)
+            self.turtle.goto(x2,y2)
+            self.turtle.goto(x3,y3)
+            self.turtle.goto(0,0)
+            self.turtle.penup()
+            self.has_been_drawn=True
+            
