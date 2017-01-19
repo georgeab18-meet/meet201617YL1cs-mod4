@@ -2,7 +2,7 @@ import turtle
 import math
 
 class Rectangle :
-    def __init__(self,length,height,angle):
+    def __init__(self,length,height,angle,xstart,ystart):
         """
         Initialize new rectangle instance.
 
@@ -23,6 +23,10 @@ class Rectangle :
             self.angle=angle
         else :
             self.angle=0
+
+        self.xstart=xstart
+
+        self.ystart=ystart
 
         self.turtle=turtle.clone() #Make a new turtle object just for this instance so that drawings can be cleared.
         turtle.speed(0) #Make turtle move as fast as possible.
@@ -64,26 +68,86 @@ class Rectangle :
         """
         self.turtle.clear() #Remove old drawings (if they exist)
         self.turtle.penup()
-        self.turtle.goto(0,0)
+        self.turtle.goto(self.xstart,self.ystart)
         self.turtle.pendown()
-        if self.angle == 0:
-            self.turtle.goto(self.length,0)
-            self.turtle.goto(self.length,self.height)
-            self.turtle.goto(0,self.height)
-            self.turtle.goto(0,0)
+        if self.angle == 90:
+            self.turtle.goto(self.xstart+self.length,self.ystart)
+            self.turtle.goto(self.xstart+self.length,self.ystart+self.height)
+            self.turtle.goto(self.xstart,self.ystart+self.height)
+            self.turtle.goto(self.xstart,self.ystart)
+            self.turtle.penup()
+            self.has_been_drawn=True
+        elif self.angle == 270:
+            self.turtle.goto(self.xstart-self.length,self.ystart)
+            self.turtle.goto(self.xstart-self.length,self.ystart-self.height)
+            self.turtle.goto(self.xstart,self.ystart-self.height)
+            self.turtle.goto(self.xstart,self.ystart)
+            self.turtle.penup()
+            self.has_been_drawn=True
+        elif self.angle < 90:
+            y1 = self.ystart+math.asin(math.radians(self.angle))*self.height
+            x1 = self.xstart+math.acos(math.radians(self.angle))*self.height
+            self.turtle.goto(x1,y1)
+            y2 = self.turtle.ycor()-math.acos(math.radians(self.angle))*self.length
+            x2 = self.turtle.xcor()+math.asin(math.radians(self.angle))*self.length
+            self.turtle.goto(x2,y2)
+            y3 = self.turtle.ycor()-math.asin(math.radians(self.angle))*self.height
+            x3 = self.turtle.xcor()-math.acos(math.radians(self.angle))*self.height
+            self.turtle.goto(x3,y3)
+            self.turtle.goto(self.xstart,self.ystart)
+            self.turtle.penup()
+            self.has_been_drawn=True
+        elif self.angle > 90 and self.angle <180:
+            self.angle = self.angle-90
+            y1 = self.ystart+math.asin(math.radians(self.angle))*self.height
+            x1 = self.xstart-math.acos(math.radians(self.angle))*self.height
+            self.turtle.goto(x1,y1)
+            y2 = self.turtle.ycor()-math.acos(math.radians(self.angle))*self.length
+            x2 = self.turtle.xcor()-math.asin(math.radians(self.angle))*self.length
+            self.turtle.goto(x2,y2)
+            y3 = self.turtle.ycor()-math.asin(math.radians(self.angle))*self.height
+            x3 = self.turtle.xcor()+math.acos(math.radians(self.angle))*self.height
+            self.turtle.goto(x3,y3)
+            self.turtle.goto(self.xstart,self.ystart)
+            self.turtle.penup()
+            self.has_been_drawn=True
+        elif self.angle > 180 and self.angle < 270:
+            self.angle = self.angle-180
+            y1 = self.ystart-math.asin(math.radians(self.angle))*self.height
+            x1 = self.xstart-math.acos(math.radians(self.angle))*self.height
+            self.turtle.goto(x1,y1)
+            y2 = self.turtle.ycor()+math.acos(math.radians(self.angle))*self.length
+            x2 = self.turtle.xcor()-math.asin(math.radians(self.angle))*self.length
+            self.turtle.goto(x2,y2)
+            y3 = self.turtle.ycor()+math.asin(math.radians(self.angle))*self.height
+            x3 = self.turtle.xcor()+math.acos(math.radians(self.angle))*self.height
+            self.turtle.goto(x3,y3)
+            self.turtle.goto(self.xstart,self.ystart)
+            self.turtle.penup()
+            self.has_been_drawn=True
+        elif self.angle > 270 and self.angle < 360:
+            self.angle = self.angle-270
+            y1 = self.ystart-math.asin(math.radians(self.angle))*self.height
+            x1 = self.xstart+math.acos(math.radians(self.angle))*self.height
+            self.turtle.goto(x1,y1)
+            y2 = self.turtle.ycor()+math.acos(math.radians(self.angle))*self.length
+            x2 = self.turtle.xcor()+math.asin(math.radians(self.angle))*self.length
+            self.turtle.goto(x2,y2)
+            y3 = self.turtle.ycor()+math.asin(math.radians(self.angle))*self.height
+            x3 = self.turtle.xcor()-math.acos(math.radians(self.angle))*self.height
+            self.turtle.goto(x3,y3)
+            self.turtle.goto(self.xstart,self.ystart)
             self.turtle.penup()
             self.has_been_drawn=True
         else:
-            y1 = math.asin(math.radians(90-self.angle))*self.height
-            x1 = math.acos(math.radians(90-self.angle))*self.height
-            y2 = math.asin(math.radians(90-self.angle))*math.sqrt((self.length**2)+(self.height**2))
-            x2 = math.acos(math.radians(90-self.angle))*math.sqrt((self.length**2)+(self.height**2))
-            y3 = math.asin(math.radians(self.angle))*self.length
-            x3 = math.acos(math.radians(self.angle))*self.length
-            self.turtle.goto(x1,y1)
-            self.turtle.goto(x2,y2)
-            self.turtle.goto(x3,y3)
-            self.turtle.goto(0,0)
-            self.turtle.penup()
-            self.has_been_drawn=True
-            
+            self.angle = self.angle-360
+            self.draw_shape()
+    def set_start(self,x,y):
+        self.xstart=x
+        self.ystart=y
+        self.draw_shape()
+    def set_angle(self,angle):
+        self.angle = angle
+        self.draw_shape()
+        
+        
