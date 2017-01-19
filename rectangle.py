@@ -84,6 +84,13 @@ class Rectangle :
             self.turtle.goto(self.xstart,self.ystart)
             self.turtle.penup()
             self.has_been_drawn=True
+        elif self.angle == 180:
+            self.turtle.goto(self.xstart-self.height,self.ystart)
+            self.turtle.goto(self.xstart-self.height,self.ystart-self.length)
+            self.turtle.goto(self.xstart,self.ystart-self.length)
+            self.turtle.goto(self.xstart,self.ystart)
+            self.turtle.penup()
+            self.has_been_drawn=True
         elif self.angle < 90:
             y1 = self.ystart+math.asin(math.radians(self.angle))*self.height
             x1 = self.xstart+math.acos(math.radians(self.angle))*self.height
